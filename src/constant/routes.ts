@@ -1,0 +1,16 @@
+export const ROUTES = {
+  SIGN_UP: "/sign-up",
+  DATE: "/date",
+  LOGIN: "/login",
+  HOME: "/",
+  RESET: "/reset",
+  VERIFY: "/otpverification",
+  FORGET_PASSWORD: "/forget-password",
+  ADD_PRODUCT: "/add-product",
+  PRODUCT_DETAILS: "/product-details",
+  BUY_NOW: "/buy-now",
+  ORDER_PAYMENT: "/order-payment",
+  ADD_TO_CART: "/add-to-cart",
+  GET_USER_ORDER: "/get-user-order",
+  USER_ACCOUNT: "/user-account",
+};

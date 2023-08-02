@@ -1,0 +1,8 @@
+ion-menu.menu-content-open {
+  ion-content {
+    margin-left: 250px; /* Adjust the value based on your sidebar width */
+  }
+}
+.card{
+  min-height: 500px;
+}
