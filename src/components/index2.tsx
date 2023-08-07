@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonLoading, IonSpinner } from '@ionic/react';
+import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonLoading, IonSpinner, IonTitle, IonSearchbar } from '@ionic/react';
 import { useHistory } from "react-router-dom";
 import b1 from "../../src/assest/image/b1.jpg";
 import b2 from "../../src/assest/image/b2.jpg";
 import b3 from "../../src/assest/image/b3.jpg";
 import b4 from "../../src/assest/image/b4.jpg";
-import { all_Product } from '../services/product';
+import { all_Product, searchProduct } from '../services/product';
 import { IProduct } from '../interfaces/productInterface';
 
 
 function Index2() {
 
     const [allProduct, setAllProduct] = useState([]);
-    const [bkLoading, setBkLoading] = useState<boolean>(false)
+    const [bkLoading, setBkLoading] = useState<boolean>(false);
+    const [searchText, setSearchText] = useState('');
+    const [searchData, setSearchData] = useState([{
+        data : "data"
+    }]);
 
     const navigate = useHistory();
 
@@ -38,9 +42,30 @@ function Index2() {
     const productDetail = (data: IProduct) => {
         navigate.push("/product-details", { state: data });
     };
-
+    const search = async (event: any) => {
+        console.log("heloo");
+        const value = event.target.value
+        console.log("first-----------", value);
+        setSearchText(event.target.value)
+        setAllProduct(allProduct.filter((f :any) =>{
+            console.log("fdata>>>>>>>>>>>>>>..", f.product_name.toLowerCase().includes(value.toLowerCase()));
+            f.product_name.toLowerCase().includes(value);
+        }))
+        // const search = await searchProduct(event.target.value);
+        // if (search?.data?.success) {
+        //     setSearchData(search?.data?.data);
+        // }
+        
+    }
+    // console.log("allproduct>>>>>>>>>>>>>", allProduct);
     return (
         <>
+            {/* <IonTitle className='text-light bg-success'>
+
+                <span ><IonSearchbar
+                    onIonInput={(ev) => search(ev)}
+                /></span>
+            </IonTitle> */}
             <div
                 id="carouselExampleControls"
                 className="carousel slide"
@@ -104,54 +129,54 @@ function Index2() {
                         <h1><IonSpinner name="circles" className="custom-loading" /></h1>
                     </div>
                 </div>
-                
+
             ) : (
-                    <IonGrid>
-                        <IonRow className="fixed-height-row">
-                            {allProduct && allProduct.length && allProduct.map((item: any, index) => {
-                                return (
-                                    <>
-                                        <IonCol size="6" size-sm="6" size-md="3" key={index}>
-                                            <div className="container" key={index}>
-                                                <div className="owl-carousel" id="slider1">
-                                                    <div className="row">
-                                                        <div className="col" key="1">
-                                                            <form
-                                                                action=""
-                                                                onClick={(e) => {
-                                                                    // setUserDetail(item);
-                                                                    productDetail(item);
-                                                                    e.preventDefault();
-                                                                }}
-                                                            >
-                                                                <IonCard>
-                                                                    <div className="p-1">
-                                                                        <img alt="Silhouette of mountains" src={item.image} style={{ height: "120px", objectFit: "cover" }} />
-                                                                        {/* <IonCardHeader> */}
-                                                                        <h3>{item.product_name}</h3>
-                                                                        <span className='text text-success'>₹{item.prize}</span>
-                                                                        <span style={{ textDecoration: "line-through" }} className='text text-danger'><br /> ₹{item.prize + item.discount}</span>
-                                                                        <p>{item.description.substring(0, 10).concat('...')}</p>
-                                                                        {/* </IonCardHeader>     */}
+                <IonGrid>
+                    <IonRow className="fixed-height-row">
+                        {allProduct && allProduct.length && allProduct.map((item: any, index) => {
+                            return (
+                                <>
+                                    <IonCol size="6" size-sm="6" size-md="3" key={index}>
+                                        <div className="container" key={index}>
+                                            <div className="owl-carousel" id="slider1">
+                                                <div className="row">
+                                                    <div className="col" key="1">
+                                                        <form
+                                                            action=""
+                                                            onClick={(e) => {
+                                                                // setUserDetail(item);
+                                                                productDetail(item);
+                                                                e.preventDefault();
+                                                            }}
+                                                        >
+                                                            <IonCard>
+                                                                <div className="p-1">
+                                                                    <img alt="Silhouette of mountains" src={item.image} style={{ height: "120px", objectFit: "cover" }} />
+                                                                    {/* <IonCardHeader> */}
+                                                                    <h3>{item.product_name}</h3>
+                                                                    <span className='text text-success'>₹{item.prize}</span>
+                                                                    <span style={{ textDecoration: "line-through" }} className='text text-danger'><br /> ₹{item.prize + item.discount}</span>
+                                                                    <p>{item.description.substring(0, 10).concat('...')}</p>
+                                                                    {/* </IonCardHeader>     */}
 
-                                                                        {/* <IonCardContent>Here`s a...</IonCardContent> */}
-                                                                    </div>
-                                                                </IonCard>
+                                                                    {/* <IonCardContent>Here`s a...</IonCardContent> */}
+                                                                </div>
+                                                            </IonCard>
 
-                                                                <br />
-                                                            </form>
-                                                        </div>
+                                                            <br />
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </IonCol>
-                                    </>
-                                )
-                            })}
-                        </IonRow>
-                    </IonGrid>
+                                        </div>
+                                    </IonCol>
+                                </>
+                            )
+                        })}
+                    </IonRow>
+                </IonGrid>
             )}
-            
+
             {/* </IonContent> */}
         </>
     );

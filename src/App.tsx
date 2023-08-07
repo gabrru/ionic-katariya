@@ -27,6 +27,7 @@ import Sidebar from './components/Sidebar';
 import "./style/global.css"
 import Home from './pages/Home';
 import LoginPage from './pages/userAuth/LoginPage';
+import ProductDetails from './container/productDetails/ProductDetails';
 
 setupIonicReact();
 
@@ -37,8 +38,10 @@ const App: React.FC = () => (
       <IonRouterOutlet>
         <Route path="/" exact component={Home} />
         <Route path="/home" exact component={Home} />
+        <Route path="/header" exact component={Header} />
         <Route path="/about" exact component={About} />
         <Route path="/login" exact component={LoginPage} />
+        <Route path="/product-details" exact component={ProductDetails} />
       </IonRouterOutlet>
       {/* <Sidebar /> */}
     </IonReactRouter>

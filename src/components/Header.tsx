@@ -7,9 +7,11 @@ import { RootState } from '../redux/reducers';
 import { IAuthReducers } from '../redux/reducers/auhReducers';
 import ActionType from '../resources/enums';
 import storage from '../utils/storage';
+import { searchProduct } from '../services/product';
 
 function Header() {
     const [searchText, setSearchText] = useState('');
+    const [searchData, setSearchData] = useState([]);
 
     const dispatch = useDispatch()
     const userData: IAuthReducers = useSelector(
@@ -32,29 +34,49 @@ function Header() {
         history.push("/login");
     }
 
-    const search = (event: any)=>{
-        console.log("heloo");
-        const value  = event.target.value
-        console.log("first-----------", value);
-        setSearchText(event.target)
+    const search = async (event: any) => {
+        try {
+            console.log("heloo");
+            const text = event.target.value
+            const value = {
+                product_name: text
+            }
+            console.log("first-----------", text.length);
+            if (typeof text === "string" && text.length === 0 || text === null) {
+                setSearchData([]);
+            } else {
+                setSearchText("open-model")
+                const search = await searchProduct(value);
+                if (search?.data?.success) {
+                    setSearchData(search?.data?.data);
+                }
+                else{
+                    setSearchData([]);
+                }
+            }
+
+        } catch (error) {
+            console.log("Error>>>>>>>>>>>>>", error);
+        }
     }
 
-    const handleSearchKeyPress = (event: any) => {
-        if (event.key === 'Enter') {
-            // Here, you can access the searchQuery value and perform your desired actions.
-            console.log('Search query:', searchText);
-        }
-    };
+
+    // const handleSearchKeyPress = (event: any) => {
+    //     if (event.key === 'Enter') {
+    //         // Here, you can access the searchQuery value and perform your desired actions.
+    //         console.log('Search query:', searchText);
+    //     }
+    // };
 
     return (
         <>
-            
-                <IonMenu contentId="main-content" >
-                    <IonContent fullscreen={true} className="ion-padding">
+
+            <IonMenu contentId="main-content" >
+                <IonContent fullscreen={true} className="ion-padding">
                     <IonHeader>
                         <IonList>
                             <IonItem>
-                                <IonLabel><IonIcon icon={home} /> <IonButton color="light" fill="default"><Link to='/' className="text-decoration-none text-dark">Home</Link></IonButton></IonLabel>
+                                <IonLabel><IonIcon icon={home} /> <IonButton color="light" fill="default"><Link to='/' className="text-decoration-none text-light">Home</Link></IonButton></IonLabel>
                             </IonItem>
                             <IonItem>
                                 <IonLabel><IonIcon icon={informationCircle} slot="start" /><IonButton color="light" fill="default">About</IonButton></IonLabel>
@@ -84,39 +106,78 @@ function Header() {
                                 </>
                             ) :
                                 <IonItem>
-                                    <IonLabel><IonIcon icon={bagAdd} slot="start" /><IonButton color="light" fill="default"><Link to='/login' slot="start" className="text-decoration-none text-dark">Login</Link></IonButton></IonLabel>
+                                    <IonLabel><IonIcon icon={bagAdd} slot="start" /><IonButton color="light" fill="default"><Link to='/login' slot="start" className="text-decoration-none text-light">Login</Link></IonButton></IonLabel>
                                 </IonItem>}
                         </IonList>
                     </IonHeader>
-                    </IonContent>
-                </IonMenu>
-                <IonPage id="main-content">
-                    <IonHeader className='text-warning'>
-                        <IonToolbar>
-                            <IonButtons slot="start" >
-                                <IonMenuButton></IonMenuButton>
-                            </IonButtons>
-                            <IonTitle className='text-light bg-success'>
-                                
-                            <p className='text-light text-center pt-3'>Katariya<span ><IonSearchbar
-                                onIonInput={(ev) => search(ev)}
-                            /></span></p>
-                            </IonTitle>
-                        </IonToolbar>
-                    </IonHeader>
-                    <IonContent className="ion-padding" id='main-content'></IonContent>
-                </IonPage>
+                </IonContent>
+            </IonMenu>
+            <IonPage id="main-content">
+                <IonHeader className='text-warning'>
+                    <IonToolbar>
+                        <IonButtons slot="start" >
+                            <IonMenuButton></IonMenuButton>
+                        </IonButtons>
+                        <IonTitle className='text-light bg-success'>
 
-                <div className="container">
-                    <IonModal ref={modal} trigger="open-modal">
-                        <p className='text-center'>Are you sure. you want to logout this app?</p>
-                        <div className="p-5 text-center btn-center">
-                            <IonButton shape="round" className='text-center' onClick={dismiss}>No</IonButton>
-                            <IonButton shape="round" className='text-center' onClick={logout}>Yes</IonButton>
-                        </div>
-                    </IonModal>
-                </div>
-            
+                            <h4 className='text-light text-center' >Katariya
+                            </h4>
+                            {/* <IonSearchbar className='w-25 p-0 m-0'
+                                    onIonInput={(ev) => search(ev)} id='open-modal-searchData'
+                                />
+                                {searchData && searchData.length && searchData.map((item: any, index) => {
+                                    return (
+                                        <>
+                                            <div className="container">
+                                                <div className="w-25">
+                                                    <div className="p-5 text-center btn-center">
+                                                        <IonList lines="full">
+                                                            <IonItem>
+                                                                <IonLabel>{item.product_name}</IonLabel>
+                                                            </IonItem>
+                                                        </IonList>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                })} */}
+                        </IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+                <IonContent className="ion-padding" id='main-content'>
+                    {searchData && searchData.length && searchData.map((item: any, index) => {
+                        return (
+                            <>
+                                <div className="container">
+                                    <IonModal>
+                                        <div className="p-5 mt-5 text-center btn-center">
+                                            <IonList lines="full">
+                                                <IonItem>
+                                                    <IonLabel>{item.product_name}</IonLabel>
+                                                    <small>hello</small>
+                                                </IonItem>
+                                            </IonList>
+                                        </div>
+                                    </IonModal>
+                                </div>
+                            </>
+                        )
+                    })}
+                </IonContent>
+            </IonPage>
+
+            <div className="container">
+                <IonModal ref={modal} trigger="open-modal">
+                    <p className='text-center'>Are you sure. you want to logout this app?</p>
+                    <div className="p-5 text-center btn-center">
+                        <IonButton shape="round" className='text-center' onClick={dismiss}>No</IonButton>
+                        <IonButton shape="round" className='text-center' onClick={logout}>Yes</IonButton>
+                    </div>
+                </IonModal>
+            </div>
+
+
         </>
     );
 }

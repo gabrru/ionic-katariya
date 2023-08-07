@@ -19,6 +19,7 @@ const ROUTES = {
     ELECTRONIC_PRODUCT: "/product/electronic-product",
     HOME_PRODUCT: "/product/home-product",
     ALL_PRODUCT : "/product/get-product",
+    SEARCH_PRODUCT:"/product/search-product"
   },
   payment: {
     CREATE_CUSTOMER: "/translation/create_customer",

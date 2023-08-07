@@ -28,6 +28,12 @@ export const womanProduct = (): Promise<ApiResponse> => {
   return http.get(endpoint.product.WOMAN_PRODUCT);
 };
 
+// searching product by product name
+export const searchProduct = (data:any):Promise<ApiResponse>=>{
+  console.log("data backend>>>>>>>>>>>", data);
+  return http.post(endpoint.product.SEARCH_PRODUCT,data)
+}
+
 
 export const electronicProduct = (): Promise<ApiResponse> => {
   return http.get(endpoint.product.ELECTRONIC_PRODUCT);
