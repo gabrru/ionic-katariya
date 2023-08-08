@@ -76,7 +76,7 @@ function Header() {
                     <IonHeader>
                         <IonList>
                             <IonItem>
-                                <IonLabel><IonIcon icon={home} /> <IonButton color="light" fill="default"><Link to='/' className="text-decoration-none text-light">Home</Link></IonButton></IonLabel>
+                                <IonLabel><IonIcon icon={home} /> <IonButton color="light" fill="default"><Link to='/' className="text-decoration-none text-dark">Home</Link></IonButton></IonLabel>
                             </IonItem>
                             <IonItem>
                                 <IonLabel><IonIcon icon={informationCircle} slot="start" /><IonButton color="light" fill="default">About</IonButton></IonLabel>

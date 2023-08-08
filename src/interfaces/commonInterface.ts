@@ -6,7 +6,7 @@ export interface IAddress {
   address?: string;
   city?: string;
   state?: string;
-  zip?: string | number;
+  zip: string | number;
   country?: string;
   lat?: number;
   lng?: number;

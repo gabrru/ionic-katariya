@@ -19,8 +19,8 @@ export const manProduct = (): Promise<ApiResponse> => {
   return http.get(endpoint.product.MAN_PRODUCT);
 };
 
-export const all_Product = (): Promise<ApiResponse> => {
-  return http.get(endpoint.product.ALL_PRODUCT);
+export const all_Product = (pageNumber:any): Promise<ApiResponse> => {
+  return http.post(endpoint.product.ALL_PRODUCT, pageNumber);
 };
 
 

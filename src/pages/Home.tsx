@@ -10,7 +10,6 @@ const Home: React.FC = () => {
       <IonContent fullscreen={true} className="ion-padding">
       <div className="constainer" >
         <div className="pt-5 p-1" >
-          {/* <Index /> */}
           <Index2 />
         </div>
       </div>

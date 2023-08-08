@@ -1,71 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonLoading, IonSpinner, IonTitle, IonSearchbar } from '@ionic/react';
-import { useHistory } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import "./home.css"
+import { IonGrid, IonRow, IonCol, IonCard, IonSpinner } from '@ionic/react';
+import { useHistory, useLocation } from "react-router-dom";
 import b1 from "../../src/assest/image/b1.jpg";
 import b2 from "../../src/assest/image/b2.jpg";
 import b3 from "../../src/assest/image/b3.jpg";
 import b4 from "../../src/assest/image/b4.jpg";
-import { all_Product, searchProduct } from '../services/product';
+import { all_Product } from '../services/product';
 import { IProduct } from '../interfaces/productInterface';
 
 
 function Index2() {
 
     const [allProduct, setAllProduct] = useState([]);
-    const [bkLoading, setBkLoading] = useState<boolean>(false);
-    const [searchText, setSearchText] = useState('');
-    const [searchData, setSearchData] = useState([{
-        data : "data"
-    }]);
+    
+    // const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const [bkLoading, setBkLoading] = useState<boolean>(false)
 
     const navigate = useHistory();
+    
 
     // fetch Man Product
-    const allProducts = async () => {
+    const allProducts = async (pageNumber: number) => {
         setBkLoading(true);
-        const mProduct = await all_Product();
+        const page = {
+            pageNumber
+        }
+        const mProduct = await all_Product(page);
         if (mProduct.data?.success) {
             setAllProduct(mProduct.data?.data);
+            setTotalPages(mProduct.data?.totalPages)
             setBkLoading(false);
         } else {
             setBkLoading(false);
-            console.log("mProduct.data?.success", mProduct.data?.success);
+            
         }
         setBkLoading(false);
         return mProduct;
     };
 
     useEffect(() => {
-        allProducts();
+        allProducts(1);
     }, []);
 
     const productDetail = (data: IProduct) => {
-        navigate.push("/product-details", { state: data });
+        console.log("product>>>>>>>>clicked>>>>", data);
+        navigate.push("/product-details", data );
     };
-    const search = async (event: any) => {
-        console.log("heloo");
-        const value = event.target.value
-        console.log("first-----------", value);
-        setSearchText(event.target.value)
-        setAllProduct(allProduct.filter((f :any) =>{
-            console.log("fdata>>>>>>>>>>>>>>..", f.product_name.toLowerCase().includes(value.toLowerCase()));
-            f.product_name.toLowerCase().includes(value);
-        }))
-        // const search = await searchProduct(event.target.value);
-        // if (search?.data?.success) {
-        //     setSearchData(search?.data?.data);
-        // }
+
+    const handlePageClick = async (data: any) => {
         
+        // setCurrentPage(data.selected + 1);
+        allProducts(data.selected + 1);
+    };
+    const handleClick = async (e: any) => {
+        console.log(">>>>>>>>>>", e)
+
     }
-    // console.log("allproduct>>>>>>>>>>>>>", allProduct);
+
+
     return (
         <>
-            {/* <IonTitle className='text-light bg-success'>
-
-                <span ><IonSearchbar
-                    onIonInput={(ev) => search(ev)}
-                /></span>
-            </IonTitle> */}
             <div
                 id="carouselExampleControls"
                 className="carousel slide"
@@ -173,6 +170,37 @@ function Index2() {
                                 </>
                             )
                         })}
+                        {/* {totalPages > 0 ? ( */}
+
+
+
+                        <ReactPaginate
+                            previousLabel={"<"}
+                            nextLabel={">"}
+                            breakLabel={"..."}
+                            pageCount={totalPages}
+                            // pageRangeDisplayed={3}
+                            // marginPagesDisplayed={2}
+                            // renderOnZeroPageCount={null}
+
+                            onPageChange={handlePageClick}
+               
+                            containerClassName="pagination"
+                            // containerClassName={"pagination justify-content-center mt-4"}
+                            pageClassName={"page-item"}
+                            pageLinkClassName={"page-link"}
+                            previousClassName={"page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            nextLinkClassName={"page-link"}
+                            breakClassName={"page-item"}
+                            breakLinkClassName={"page-link"}
+                        // activeClassName="active"
+                        />
+
+                        {/* // ) : ( */}
+                        {/* //     <></> */}
+                        {/* // )} */}
                     </IonRow>
                 </IonGrid>
             )}

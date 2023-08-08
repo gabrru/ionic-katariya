@@ -17,7 +17,7 @@ function Index() {
 
   // fetch Man Product
   const allProducts = async () => {
-    const mProduct = await all_Product();
+    const mProduct = await all_Product(1);
     if (mProduct.data?.success) {
       setAllProduct(mProduct.data?.data)
     } else {
