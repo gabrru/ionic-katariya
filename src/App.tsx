@@ -30,46 +30,13 @@ import LoginPage from './pages/userAuth/LoginPage';
 import ProductDetails from './container/productDetails/ProductDetails';
 import BuyNow from './container/buyNow/BuyNow';
 import { home, briefcaseSharp, cart, person } from 'ionicons/icons';
+import OrderPayment from './container/payment/OrderPayment';
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
-        <Header />
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route path="/" exact component={Home} />
-          <Route path="/home" exact component={Home} />
-          <Route path="/header" exact component={Header} />
-          <Route path="/about" exact component={About} />
-          <Route path="/login" exact component={LoginPage} />
-          <Route path="/product-details" exact component={ProductDetails} />
-          <Route path="/buy-now" exact component={BuyNow} />
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon icon={home} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="radio" href="/order">
-            <IonIcon icon={briefcaseSharp} />
-            <IonLabel>Order</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="library" href="/cart">
-            <IonIcon icon={cart} />
-            <IonLabel>Cart</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="search" href="/account">
-            <IonIcon icon={person} />
-            <IonLabel>Account</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
+    <Sidebar />
   </IonApp>
 );
 

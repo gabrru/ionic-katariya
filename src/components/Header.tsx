@@ -100,13 +100,13 @@ function Header() {
                                     </IonItem>
 
                                     <IonItem>
-                                        <IonLabel><IonIcon icon={codeSlash} slot="start" /><IonButton color="light" fill="default" id="open-modal">Logout</IonButton></IonLabel>
+                                        <IonLabel><IonIcon icon={codeSlash} slot="start" /><IonButton color="light" fill="default" id="open-modal" ><span className='text-dark'>Logout</span></IonButton></IonLabel>
 
                                     </IonItem>
                                 </>
                             ) :
                                 <IonItem>
-                                    <IonLabel><IonIcon icon={bagAdd} slot="start" /><IonButton color="light" fill="default"><Link to='/login' slot="start" className="text-decoration-none text-light">Login</Link></IonButton></IonLabel>
+                                    <IonLabel><IonIcon icon={bagAdd} slot="start" /><IonButton color="light" fill="default"><Link to='/login' slot="start" className="text-decoration-none text-dark">Login</Link></IonButton></IonLabel>
                                 </IonItem>}
                         </IonList>
                     </IonHeader>
@@ -167,12 +167,14 @@ function Header() {
                 </IonContent>
             </IonPage>
 
-            <div className="container">
-                <IonModal ref={modal} trigger="open-modal">
-                    <p className='text-center'>Are you sure. you want to logout this app?</p>
-                    <div className="p-5 text-center btn-center">
-                        <IonButton shape="round" className='text-center' onClick={dismiss}>No</IonButton>
-                        <IonButton shape="round" className='text-center' onClick={logout}>Yes</IonButton>
+            <div className="w-25 w-25">
+                <IonModal ref={modal} trigger="open-modal" >
+                    <div >
+                        <p className='text-center'>Are you sure. you want to logout this app?</p>
+                        <div className="p-5 text-center btn-center">
+                            <IonButton shape="round" className='text-center' onClick={dismiss}>No</IonButton>
+                            <IonButton shape="round" className='text-center' onClick={logout}>Yes</IonButton>
+                        </div>
                     </div>
                 </IonModal>
             </div>

@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { getAccessToken } from "../helper/storage";
+import ApiResponse from "../resources/entity/IApiResponse";
 // import config from "../config/config";
 
 export const http = axios.create({
-  baseURL: "http://localhost:5000",
-  // baseURL: "https://7u7e1zi4xe.execute-api.us-east-1.amazonaws.com/dev",
+  // baseURL: "http://localhost:5000",
+  baseURL: "https://7u7e1zi4xe.execute-api.us-east-1.amazonaws.com/dev",
   headers: {
     "Content-Type": "application/json",
   },
@@ -16,7 +17,14 @@ http.interceptors.request.use((req: any) => {
   return req;
 });
 
-export function get<P>(url: string, params?: P): Promise<any> {
+interface IGetResult {
+  success: boolean;
+  data : unknown;
+  message : string;
+  error? : string | unknown;
+}
+
+export function get<P>(url: string, params?: P): Promise<ApiResponse> {
   return http({
     method: "get",
     url,

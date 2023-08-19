@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 
 import { insertAddress, userInfo } from '../../services/auth';
-import { IAddress } from '../../interfaces/commonInterface';
+import { IAddress, IFillAddress } from '../../interfaces/commonInterface';
 import { addressValidationSchema } from '../../validationSchemas/authValidation';
 import { IAuthReducers } from '../../redux/reducers/auhReducers';
 import { RootState } from '../../redux/reducers';
@@ -19,9 +19,9 @@ import { IByAllProduct, IProduct } from '../../interfaces/productInterface';
 
 const BuyNow = () => {
 
-  const navigate : any = useHistory();
-  const location : any = useLocation();
-  const {state} : any = useLocation();
+  const navigate: any = useHistory();
+  const location: any = useLocation();
+  const { state }: any = useLocation();
   const product_data: IProduct = state as unknown as IProduct
   const [loading, setLoading] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -36,6 +36,7 @@ const BuyNow = () => {
     reset,
     formState: { errors },
   } = useForm({
+    mode: "onChange",
     resolver: yupResolver(addressValidationSchema(translation)),
   });
 
@@ -49,12 +50,13 @@ const BuyNow = () => {
     };
     const getInfo = await userInfo(data as IUserInfo);
     if (getInfo.data?.success) {
+      console.log("getInfo.data?.data.country", getInfo.data?.data[0]?.country);
       reset({
-        country: getInfo.data?.data.country,
-        state: getInfo.data?.data.state,
-        city: getInfo.data?.data.city,
-        zip: getInfo.data?.data.zip,
-        address: getInfo.data?.data.address,
+        country: getInfo.data?.data[0]?.country,
+        state: getInfo.data?.data[0]?.state,
+        city: getInfo.data?.data[0]?.city,
+        zip: getInfo.data?.data[0]?.zip,
+        address: getInfo.data?.data[0]?.address,
       });
       setUserAccount(getInfo.data?.data);
       setLoading(false);
@@ -97,6 +99,7 @@ const BuyNow = () => {
 
   // handle formSubmit
   const onSubmit = async (data: IAddress) => {
+    setLoading(true)
     const insert_address = {
       country: data.country,
       state: data.state,
@@ -122,7 +125,8 @@ const BuyNow = () => {
           };
           place_all_order.push(data1);
         });
-        navigate("/order-payment", { state: place_all_order });
+        setLoading(false)
+        navigate.push("/order-payment", place_all_order);
       } else {
         setLoading(true);
         const total_amount = location.state?.amount * location.state?.quantity;
@@ -137,7 +141,7 @@ const BuyNow = () => {
 
         setLoading(false);
         toast.success(createAddress.data?.success);
-        navigate("/order-payment", { state: order_details });
+        navigate.push("/order-payment", order_details)
       }
     } else {
       setLoading(false);
@@ -152,6 +156,45 @@ const BuyNow = () => {
           <div className="mt-1 pt-1">
             <IonGrid className="ion-padding">
               <IonRow>
+                <IonCol size="12" size-md="4" size-lg="6" className="ion-padding w-100">
+                  <div className="mt-3 ml-0 p-0">
+                    <table className="table w-100 table table-success table-striped">
+                      <tbody>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td>Total Discount</td>
+                          <td>₹{totalDiscount}</td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row">2</th>
+                          <td>Quantity</td>
+                          <td> {totalQuantity}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">3</th>
+                          <td>Txt</td>
+                          <td>₹0</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">4</th>
+                          <td>Amount</td>
+                          <td>₹{amount}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">5</th>
+                          <td>Shipping</td>
+                          <td>₹0</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">6</th>
+                          <td>Total</td>
+                          <td>₹{totalAmount}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </IonCol>
                 <IonCol size="12" size-md="6" size-lg="6">
                   <div className="card border-0 w-100 p-1">
                     <h1 style={{ color: "#6610f2" }}>Shipping Address</h1>
@@ -197,7 +240,7 @@ const BuyNow = () => {
                       <div className="form-group">
                         <IonItem>
                           {/* <IonLabel position="floating" className='m-2'>City:</IonLabel> */}
-                          <IonInput 
+                          <IonInput
                             className={classNames("", {
                               "is-invalid": errors.city,
                             })}
@@ -215,7 +258,7 @@ const BuyNow = () => {
                       <div className="form-group">
                         <IonItem>
                           {/* <IonLabel position="floating" className='m-2'>Zip:</IonLabel> */}
-                          <IonInput 
+                          <IonInput
                             className={classNames("", {
                               "is-invalid": errors.zip,
                             })}
@@ -249,54 +292,16 @@ const BuyNow = () => {
                       </div>
                       <div className="d-grid gap-2 d-md-flex justify-content-md-center mx-auto">
                         <IonButton
-                          className="theme-button secondary-gradient-btn button-radius"
+                          className="theme-button secondary-gradient-btn button-radius "
                           type="submit"
                           expand="block"
-                          >
-                          Add to Cart
-                          {loading ? <IonSpinner name="dots" /> : null}
+                          style={{ width: "120px" }}
+                        >
+
+                          {loading ? <IonSpinner name="dots" /> : "Order Now"}
                         </IonButton>
                       </div>
                     </form>
-                  </div>
-                </IonCol>
-                <IonCol size="12" size-md="4" size-lg="6" className="ion-padding w-100">
-                  <div className="mt-5 ml-0 p-0">
-                    <table className="table w-100 table table-success table-striped">
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Total Discount</td>
-                          <td>₹{totalDiscount}</td>
-                        </tr>
-
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>Quantity</td>
-                          <td> {totalQuantity}</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td>Txt</td>
-                          <td>₹0</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">4</th>
-                          <td>Amount</td>
-                          <td>₹{amount}</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">5</th>
-                          <td>Shipping</td>
-                          <td>₹0</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">6</th>
-                          <td>Total</td>
-                          <td>₹{totalAmount}</td>
-                        </tr>
-                      </tbody>
-                    </table>
                   </div>
                 </IonCol>
               </IonRow>

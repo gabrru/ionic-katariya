@@ -12,6 +12,14 @@ export interface IAddress {
   lng?: number;
 }
 
+
+export interface IFillAddress {
+  address: string;
+  city: string;
+  state: string;
+  zip: string | number;
+  country: string;
+}
 export interface IUserOrder {
   user_id?: number;
   address_id?: IAddress;

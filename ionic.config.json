@@ -1,5 +1,12 @@
 {
   "name": "katariya",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
+  "splashScreen": {
+    "iosSplash": "src/assets/splash.png",
+    "androidSplash": "src/assets/splash.png",
+    "splashFullScreen": "true"
+  },
   "type": "react"
 }

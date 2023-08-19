@@ -65,7 +65,7 @@ function ProductDetails() {
             quantity: totalQuantity,
         };
         setLoading(false);
-        navigate.push("/buy-now", { state: product_Details });
+        navigate.push("/buy-now",product_Details );
     };
 
     return (
@@ -79,6 +79,7 @@ function ProductDetails() {
                                     <IonImg
                                         src={product_data?.image}
                                         alt="The Wisconsin State Capitol building in Madison, WI at night"
+                                        
                                     ></IonImg>
                                 </IonCol>
                                 <IonCol size="12" size-md="4" size-lg="6" className="ion-padding w-100">

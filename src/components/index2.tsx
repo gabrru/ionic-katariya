@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from "react-paginate";
 import "./home.css"
-import { IonGrid, IonRow, IonCol, IonCard, IonSpinner } from '@ionic/react';
+import { IonGrid, IonRow, IonCol, IonCard, IonSpinner, IonImg } from '@ionic/react';
 import { useHistory, useLocation } from "react-router-dom";
 import b1 from "../../src/assest/image/b1.jpg";
 import b2 from "../../src/assest/image/b2.jpg";
@@ -23,26 +23,51 @@ function Index2() {
     
 
     // fetch Man Product
-    const allProducts = async (pageNumber: number) => {
-        setBkLoading(true);
-        const page = {
-            pageNumber
-        }
-        const mProduct = await all_Product(page);
-        if (mProduct.data?.success) {
-            setAllProduct(mProduct.data?.data);
-            setTotalPages(mProduct.data?.totalPages)
-            setBkLoading(false);
-        } else {
-            setBkLoading(false);
+    // const allProducts = async (pageNumber: number) => {
+    //     setBkLoading(true);
+    //     const page = {
+    //         pageNumber
+    //     }
+    //     const mProduct = await all_Product(page);
+    //     if (mProduct.data?.success) {
+    //         setAllProduct(mProduct.data?.data);
+    //         setTotalPages(mProduct.data?.totalPages)
+    //         setBkLoading(false);
+    //     } else {
+    //         setBkLoading(false);
             
+    //     }
+    //     setBkLoading(false);
+    //     return mProduct;`
+    // };
+
+    // useEffect(() => {
+    //     allProducts(1);
+    // }, []);
+
+    const allProducts = async () => {
+        try {
+            setBkLoading(true);
+            const mProduct = await all_Product();
+            if (mProduct.data?.success) {
+                setAllProduct(mProduct.data?.data);
+                setTotalPages(mProduct.data?.totalPages)
+                setBkLoading(false);
+            } else {
+                console.log("error>>>>>>>");
+                setBkLoading(false);
+
+            }
+            setBkLoading(false);
+            return mProduct;
+        } catch (error) {
+            setBkLoading(false)
+            console.log("SomeThing Went Wrong");
         }
-        setBkLoading(false);
-        return mProduct;
     };
 
     useEffect(() => {
-        allProducts(1);
+        allProducts();
     }, []);
 
     const productDetail = (data: IProduct) => {
@@ -53,7 +78,7 @@ function Index2() {
     const handlePageClick = async (data: any) => {
         
         // setCurrentPage(data.selected + 1);
-        allProducts(data.selected + 1);
+        // allProducts(data.selected + 1);
     };
     const handleClick = async (e: any) => {
         console.log(">>>>>>>>>>", e)
@@ -70,16 +95,16 @@ function Index2() {
             >
                 <div className="carousel-inner">
                     <div className="carousel-item active" data-bs-interval="2000">
-                        <img src={b1} className="d-block w-100" alt="..." />
+                        <IonImg src={b1} className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item" data-bs-interval="2000">
-                        <img src={b2} className="d-block w-100" alt="..." />
+                        <IonImg src={b2} className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item" data-bs-interval="2000">
-                        <img src={b3} className="d-block w-100" alt="..." />
+                        <IonImg src={b3} className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item" data-bs-interval="2000">
-                        <img src={b4} className="d-block w-100" alt="..." />
+                        <IonImg src={b4} className="d-block w-100" alt="..." />
                     </div>
                 </div>
                 <a
