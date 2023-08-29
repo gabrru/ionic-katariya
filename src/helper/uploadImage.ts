@@ -50,7 +50,6 @@ export function uploadFileToS3(file : any, fileName : string) {
         region: "us-east-1"
     });
 
-    console.log("aws config>>>>>>>>>>>", AWS);
   const params = {
     Bucket: "katariya-product-image",
     Key: fileName,

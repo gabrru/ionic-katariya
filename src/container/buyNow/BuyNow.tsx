@@ -126,7 +126,7 @@ const BuyNow = () => {
           place_all_order.push(data1);
         });
         setLoading(false)
-        navigate.push("/order-payment", place_all_order);
+        navigate.push("/payment", place_all_order);
       } else {
         setLoading(true);
         const total_amount = location.state?.amount * location.state?.quantity;
@@ -141,7 +141,7 @@ const BuyNow = () => {
 
         setLoading(false);
         toast.success(createAddress.data?.success);
-        navigate.push("/order-payment", order_details)
+        navigate.push("/payment", order_details)
       }
     } else {
       setLoading(false);
@@ -214,7 +214,7 @@ const BuyNow = () => {
                             name="country" />
                           {errors.country && (
                             <div className="invalid-feedback">
-                              {errors.country?.message}{" "}
+                              {/* {errors?.country?.message}{" "} */}
                             </div>
                           )}
                         </IonItem>
@@ -232,7 +232,7 @@ const BuyNow = () => {
                             name="state" />
                           {errors.state && (
                             <div className="invalid-feedback">
-                              {errors.state?.message}{" "}
+                              {/* {errors.state?.message}{" "} */}
                             </div>
                           )}
                         </IonItem>
@@ -250,7 +250,7 @@ const BuyNow = () => {
                             name="city" />
                           {errors.city && (
                             <div className="invalid-feedback">
-                              {errors.city?.message}{" "}
+                              {/* {errors.city?.message}{" "} */}
                             </div>
                           )}
                         </IonItem>
@@ -268,7 +268,7 @@ const BuyNow = () => {
                             name="zip" />
                           {errors.zip && (
                             <div className="invalid-feedback">
-                              {errors.zip?.message}{" "}
+                              {/* {errors.zip?.message}{" "} */}
                             </div>
                           )}
                         </IonItem>
@@ -285,7 +285,7 @@ const BuyNow = () => {
                             name="address" />
                           {errors.address && (
                             <div className="invalid-feedback">
-                              {errors.address?.message}{" "}
+                              {/* {errors.address?.message}{" "} */}
                             </div>
                           )}
                         </IonItem>

@@ -29,15 +29,71 @@ import Home from './pages/Home';
 import LoginPage from './pages/userAuth/LoginPage';
 import ProductDetails from './container/productDetails/ProductDetails';
 import BuyNow from './container/buyNow/BuyNow';
-import { home, briefcaseSharp, cart, person } from 'ionicons/icons';
+import { home, briefcaseSharp, cart, person, call, construct, bagAdd } from 'ionicons/icons';
 import OrderPayment from './container/payment/OrderPayment';
+import PublicRoutes from './routes/PublicRoutes';
+import { IAuthReducers } from './redux/reducers/auhReducers';
+import { useSelector } from 'react-redux';
+import { RootState } from './redux/reducers';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App: React.FC = () => {
+  const userData: IAuthReducers = useSelector(
+    (state: RootState) => state.AuthReducers
+  );
+  return (
   <IonApp>
-    <Sidebar />
+    <IonReactRouter>
+      <Header />
+      <IonTabs>
+        <IonRouterOutlet>
+          <Route path="/" component={PublicRoutes} />
+        </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="home" href="/home">
+              <IonIcon icon={home} />
+              <IonLabel>Home</IonLabel>
+            </IonTabButton>
+            {userData.isLoggedIn ?
+              <IonTabButton tab="library" href="/cart">
+                <IonIcon icon={cart} />
+                <IonLabel>Cart</IonLabel>
+              </IonTabButton>
+              :
+              <IonTabButton tab="library" href="/contact">
+                <IonIcon icon={call} />
+                <IonLabel>Contact</IonLabel>
+              </IonTabButton>
+            }
+            {userData.isLoggedIn ?
+              <IonTabButton tab="search" href="/account">
+                <IonIcon icon={person} />
+                <IonLabel>Account</IonLabel>
+              </IonTabButton>
+              :
+              <IonTabButton tab="search" href="/term">
+                <IonIcon icon={construct} />
+                <IonLabel>Term and Condition</IonLabel>
+              </IonTabButton>
+            }
+            {userData.isLoggedIn ?
+              <IonTabButton tab="order" href="/order">
+                <IonIcon icon={briefcaseSharp} />
+                <IonLabel>Order</IonLabel>
+              </IonTabButton>
+              :
+              <IonTabButton tab="radio" href="/login">
+                <IonIcon icon={bagAdd} />
+                <IonLabel>Login</IonLabel>
+              </IonTabButton>
+            }
+
+          </IonTabBar>
+      </IonTabs>
+    </IonReactRouter>
   </IonApp>
-);
+  )
+};
 
 export default App;

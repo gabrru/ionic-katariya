@@ -8,9 +8,11 @@ const ROUTES = {
     RESET_PASSWORD: "/auth/changepassword",
     ACTIVATE_DEACTIVATE_USER: "/auth/status/update",
     SIGNUP: "auth/signup",
+    ERROR : "/error",
     MATCH_TOKEN: "/auth/match-token",
     CREATE_ADDRESS: "/address/insert-address",
     GET_ADDRESS: "/address/get-address",
+    HOME : "/home"
   },
   product: {
     ADD_PRODUCT: "/product/add-product",

@@ -97,7 +97,7 @@ const StripeCheckOut = (props: any) => {
               if (savePayment?.data?.success) {
                 toast.success("Order Create is successfully");
                 setLoading(false);
-                navigate.push("/");
+                navigate.push("/home");
               }
             } else {
               const paymentPayload: ICreateOrder = {
@@ -115,7 +115,7 @@ const StripeCheckOut = (props: any) => {
               if (savePayment?.data?.success) {
                 toast.success("Order Create is successfully");
                 setLoading(false);
-                navigate.push("/");
+                navigate.push("/home");
               }
             }
           } else if (error) {

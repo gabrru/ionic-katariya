@@ -4,8 +4,8 @@ import ApiResponse from "../resources/entity/IApiResponse";
 // import config from "../config/config";
 
 export const http = axios.create({
-  // baseURL: "http://localhost:5000",
-  baseURL: "https://7u7e1zi4xe.execute-api.us-east-1.amazonaws.com/dev",
+  baseURL: "http://localhost:5000",
+  // baseURL: "https://7u7e1zi4xe.execute-api.us-east-1.amazonaws.com/dev",
   headers: {
     "Content-Type": "application/json",
   },

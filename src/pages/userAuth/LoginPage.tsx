@@ -34,7 +34,6 @@ const LoginPage = () => {
     //   Login Submit
     const onSubmit = async (data: ILoginData) => {
         setLoading(true);
-        console.log("data>>>>>>>>>>>>>>>>", data);
         const loginRes = await login(data);
         if (loginRes?.data?.success) {
             // if (
@@ -43,7 +42,6 @@ const LoginPage = () => {
             // ) {
             const userData = loginRes?.data?.data;
             // const address = JSON.parse(loginRes?.data?.data.address);
-            console.log("userData>>>>>>>>>>>>>>>/////", userData);
             await dispatch({
                 type: ActionType.LOGIN,
                 payload: { ...loginRes?.data },

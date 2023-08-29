@@ -76,10 +76,10 @@ function Header() {
                     <IonHeader>
                         <IonList>
                             <IonItem>
-                                <IonLabel><IonIcon icon={home} /> <IonButton color="light" fill="default"><Link to='/' className="text-decoration-none text-dark">Home</Link></IonButton></IonLabel>
+                                <IonLabel><IonIcon icon={home} /> <IonButton color="light" fill="default"><Link to='/home' className="text-decoration-none text-dark">Home</Link></IonButton></IonLabel>
                             </IonItem>
                             <IonItem>
-                                <IonLabel><IonIcon icon={informationCircle} slot="start" /><IonButton color="light" fill="default">About</IonButton></IonLabel>
+                                <IonLabel><IonIcon icon={informationCircle} slot="start" /><IonButton color="light" fill="default"><Link to='/about' className="text-decoration-none text-dark">About</Link></IonButton></IonLabel>
                             </IonItem>
                             <IonItem>
                                 <IonLabel><IonIcon icon={call} slot="start" /><IonButton color="light" fill="default">Contact</IonButton></IonLabel>
@@ -93,7 +93,7 @@ function Header() {
                                         <IonLabel><IonIcon icon={person} slot="start" /><IonButton color="light" fill="default">Account</IonButton></IonLabel>
                                     </IonItem>
                                     <IonItem>
-                                        <IonLabel><IonIcon icon={briefcaseSharp} slot="start" /><IonButton color="light" fill="default">Order</IonButton></IonLabel>
+                                        <IonLabel><IonIcon icon={bagAdd} slot="start" /><IonButton color="light" fill="default">Order</IonButton></IonLabel>
                                     </IonItem>
                                     <IonItem>
                                         <IonLabel><IonIcon icon={bagAdd} slot="start" /><IonButton color="light" fill="default">Add Product</IonButton></IonLabel>

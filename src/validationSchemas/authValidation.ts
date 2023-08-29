@@ -14,14 +14,21 @@ import {
   country,
   address,
 } from "./commonFieldVerification";
+import { PASSWORD_REGEX } from "../constant/commonConstant";
 
 export const signupValidationSchema = (translation: TFunction) =>
   yup.object().shape({
     name: name(translation),
     email: email(translation),
-    password: password(translation),
     phone: phone(translation),
-    confirm_password: confirm_password(translation),
+    password: yup
+      .string()
+      .required(translation("pass_req"))
+      .matches(PASSWORD_REGEX, translation("pass_reg_ms"))
+      .max(25, translation("max_len_25")),
+    confirm_password: yup.string()
+      .required('Password is mendatory')
+      .oneOf([yup.ref('password')], 'Passwords does not match'),
   });
 
 export const loginValidationSchema = (translation: TFunction) =>

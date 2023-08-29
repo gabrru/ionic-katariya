@@ -6,7 +6,14 @@ export interface ISignup {
   phone: number;
   password: string;
   confirm_password: string;
-  account_type: string;
+  account_type?: string;
+}
+export interface ISignupData {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirm_password: string;
 }
 
 export interface IUserInfo {

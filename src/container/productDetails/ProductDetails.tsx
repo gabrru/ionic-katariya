@@ -12,6 +12,7 @@ import { createCart } from '../../services/cart';
 
 function ProductDetails() {
     const [loading, setLoading] = useState(false);
+    const [cartLoading, setCartLoading] = useState(false);
     const [totalQuantity, settotalQuantity] = useState(1);
     const { state } = useLocation();
     const navigate = useHistory();
@@ -40,7 +41,7 @@ function ProductDetails() {
     };
 
     const addToCart = async () => {
-        setLoading(true);
+        setCartLoading(true);
         const cart: any = {
             product_id: product_data?.id,
             user_id: authReducer.authData?.id,
@@ -49,8 +50,10 @@ function ProductDetails() {
         const cartResponse = await createCart(cart);
         if (cartResponse.data?.success) {
             toast.success(cartResponse.data?.message);
-            navigate.push("/add-to-cart");
+            setCartLoading(false);
+            navigate.push("/cart");
         }
+        setCartLoading(false);
     };
 
     const buyNow = () => {
@@ -133,7 +136,7 @@ function ProductDetails() {
                                         expand="block"
                                         onClick={addToCart}>
                                         Add to Cart
-                                        {loading ? <IonSpinner name="dots" /> : null}
+                                        {cartLoading ? <IonSpinner name="dots" /> : null}
                                     </IonButton>
                                         
                                 <IonButton

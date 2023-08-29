@@ -8,6 +8,7 @@ import {
   PASSWORD_REGEX,
   ALPHANUMERIC_REGEX,
   ADDRESS_REGEX,
+  PHONE_REGEX,
 } from "../constant/commonConstant";
 
 /**
@@ -128,7 +129,7 @@ export const confirm_password = (translate: TFunction) =>
         field_label: translate("Password"),
       })
     )
-    .matches(PASSWORD_REGEX, translate("pass_reg_ms"))
+    // .matches(translate("pass_reg_ms"))
     .oneOf([yup.ref("password")], "Password Does Not Match !!!");
 
 /**
@@ -144,7 +145,7 @@ export const password = (translate: TFunction) =>
         field_label: translate("Password"),
       })
     )
-    .matches(PASSWORD_REGEX, translate("pass_reg_ms"));
+    // .matches(translate("pass_reg_ms"));
 
 /**
  * Handle validation for phone field
@@ -154,9 +155,10 @@ export const password = (translate: TFunction) =>
 export const phone = (translate: TFunction) =>
   yup
     .string()
-    .required("this field is  Required fields")
-    .min(10, "invalid_phone")
-    .max(10, "invalid_phone");
+      .required(translate("phone_req"))
+      // .matches(PHONE_REGEX, translate("phone_valid"))
+      .min(10, translate("phone_no_should_be_at_least_10_digits"))
+      .max(12, translate("phone_no_should_not_be_more_than_14_digits"))
 // .matches(PHONE_NUMBER_REGEX, translate("invalid_phone"));
 
 // export const firstName = (translate: TFunction) =>

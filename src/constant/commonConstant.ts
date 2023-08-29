@@ -2,7 +2,7 @@ export const ROLES = {
   USER: "customer",
   ADMIN: "Admin",
 };
-
+export const PHONE_REGEX = /^(\+\d{1,3}[- .]?)?\d{10,12}$/;
 export const ALPHABATE_WITH_SPACE_REGEX = /^[a-zA-Z ]*$/;
 export const NAME_REGEX = /^[ a-zA-Z0-9\-’]+$/;
 export const NUMBER_REGEX = /^[0-9]*$/;

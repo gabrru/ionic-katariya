@@ -9,6 +9,8 @@ import b3 from "../../src/assest/image/b3.jpg";
 import b4 from "../../src/assest/image/b4.jpg";
 import { all_Product } from '../services/product';
 import { IProduct } from '../interfaces/productInterface';
+import config from "../config/config"
+// import config from "dotenv";
 
 
 function Index2() {
@@ -20,7 +22,7 @@ function Index2() {
     const [bkLoading, setBkLoading] = useState<boolean>(false)
 
     const navigate = useHistory();
-    
+    // console.log("config111>>>>>>>>>>>", process.env);
 
     // fetch Man Product
     // const allProducts = async (pageNumber: number) => {

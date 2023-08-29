@@ -18,7 +18,6 @@ const OrderPayment = () => {
     const [amounts, setAmount] = useState(0);
     const [totalQuantity, settotalQuantity] = useState(0);
     const location: any = useLocation();
-    console.log("location>>>>>>>>>>>>>>", location);
     const amount = location.state?.amount
 
     const authReducer: IAuthReducers = useSelector(
